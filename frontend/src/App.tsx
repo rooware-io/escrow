@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { ThemeProvider } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
+import { dark, light } from './assets/theme';
+import { useDarkMode } from './hooks/useDarkMode';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './screens/Home';
 
-function App() {
+const App = () => {
+  const [isDarkMode] = useDarkMode();
+  const appliedTheme = createTheme(isDarkMode ? dark : light);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={appliedTheme}>
+      <Router>
+        <Switch>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
