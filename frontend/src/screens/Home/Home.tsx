@@ -1,19 +1,29 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { IconButton, Button, Card } from '@material-ui/core';
 import { Brightness3, Brightness7 } from '@material-ui/icons';
+import { NATIVE_MINT } from '@solana/spl-token';
 
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { useWallet } from '../../hooks/useWallet';
 import { ClusterSelector } from '../../components/ClusterSelector';
 import { ENDPOINTS } from '../../config/connectionEndpoints';
 import { useAccount } from '../../hooks/useAccount';
+import { findAssociatedTokenAddress } from '../../lib/accountManagement';
 
 const Home: FC = () => {
   const { isDarkModeEnabled, setIsDarkModeEnabled } = useDarkMode();
-  const { openWalletSelection, connected, disconnect } = useWallet();
+  const { openWalletSelection, connected, disconnect, publicKey } = useWallet();
   const { accountInfo } = useAccount();
 
+  useEffect(() => {
+    if (connected && publicKey) {
+      console.log('getting associated');
+      findAssociatedTokenAddress(publicKey, NATIVE_MINT)
+        .then((key) => console.log(`associated: ${key}`))
+        .catch((err) => console.error(err));
+    }
+  }, [connected, publicKey]);
   console.log(accountInfo);
   const icon = !isDarkModeEnabled ? <Brightness7 /> : <Brightness3 />;
   return (
