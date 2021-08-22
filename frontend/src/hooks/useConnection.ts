@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Connection,
   Transaction,
@@ -5,9 +6,8 @@ import {
   Signer,
   clusterApiUrl,
 } from '@solana/web3.js';
-import { useContext } from 'react';
 import { ConnectionContext } from '../contexts/connection';
-import { WalletAdapter } from '../contexts/wallet/adapters';
+import { WalletAdapter } from '../contexts/wallet/types';
 
 export function useConnection() {
   return useContext(ConnectionContext);

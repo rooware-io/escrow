@@ -1,12 +1,11 @@
 import React from 'react';
 import { Connection } from '@solana/web3.js';
-import { DEFAULT_ENDPOINTS, ENDPOINTS } from './endpoints';
+import { DEFAULT_ENDPOINT } from '../../config/endpoints';
 import { ConnectionConfig } from './types';
 
 export const ConnectionContext = React.createContext<ConnectionConfig>({
-  cluster: ENDPOINTS[0].name,
-  url: DEFAULT_ENDPOINTS,
+  cluster: DEFAULT_ENDPOINT.name,
+  url: DEFAULT_ENDPOINT.url,
   setUrl: () => {},
-  connection: new Connection(DEFAULT_ENDPOINTS, 'confirmed'),
-  sendConnection: new Connection(DEFAULT_ENDPOINTS, 'confirmed'),
+  connection: new Connection(DEFAULT_ENDPOINT.url, 'confirmed'),
 });

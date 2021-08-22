@@ -12,5 +12,4 @@ export interface ConnectionConfig {
   url: string;
   setUrl: (val: string) => void;
   connection: Connection;
-  sendConnection: Connection;
 }

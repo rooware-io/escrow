@@ -1,6 +1,5 @@
 import React from 'react';
-import { WalletAdapter } from './adapters';
-import { WalletProvider } from './providers';
+import { WalletAdapter, WalletProvider } from './types';
 
 export const WalletContext = React.createContext<{
   walletAdapter: WalletAdapter | undefined;

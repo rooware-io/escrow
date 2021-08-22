@@ -3,6 +3,8 @@ import { IconButton, Button } from '@material-ui/core';
 import { Brightness3, Brightness7 } from '@material-ui/icons';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { useWallet } from '../../hooks/useWallet';
+import { ClusterSelector } from '../../components/ClusterSelector';
+import { ENDPOINTS } from '../../config/endpoints';
 
 const Home: FC = () => {
   const [isDarkMode, setIsDarkMode] = useDarkMode();
@@ -25,6 +27,7 @@ const Home: FC = () => {
       >
         Connect wallet
       </Button>
+      <ClusterSelector endpoints={ENDPOINTS}></ClusterSelector>
     </>
   );
 };

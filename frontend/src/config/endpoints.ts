@@ -1,5 +1,5 @@
 import { clusterApiUrl } from '@solana/web3.js';
-import { Endpoint } from './types';
+import { Endpoint } from '../contexts/connection/types';
 
 export const ENDPOINTS: Endpoint[] = [
   {
@@ -20,4 +20,4 @@ export const ENDPOINTS: Endpoint[] = [
   },
 ];
 
-export const DEFAULT_ENDPOINTS = ENDPOINTS[0].url;
+export const DEFAULT_ENDPOINT = ENDPOINTS[0];

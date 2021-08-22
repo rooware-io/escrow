@@ -7,3 +7,10 @@ export interface WalletAdapter extends EventEmitter {
   connect: () => any;
   disconnect: () => any;
 }
+
+export interface WalletProvider {
+  name: string;
+  url: string;
+  icon: string;
+  adapter?: any;
+}
