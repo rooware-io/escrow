@@ -1,17 +1,25 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+
 import Wallet from '@project-serum/sol-wallet-adapter';
+
 import { WalletDialog } from '../components/WalletDialog';
-import { WALLET_PROVIDER_KEY } from '../constants';
 import { WalletContext } from '../contexts/wallet';
 import { useConnection } from '../hooks/useConnection';
-import { useLocalStorageState } from '../hooks/useLocalStorage';
-import { notify } from '../utils';
-import { WALLET_PROVIDERS } from '../contexts/wallet/providers';
-export function WalletProvider({ children = null as any }) {
+import { notify } from '../utils/notify';
+import { WALLET_PROVIDERS } from '../config/walletProviders';
+import { getItem, setItem } from '../utils/localStorage';
+
+export const WALLET_PROVIDER_KEY = 'walletProvider';
+
+export const WalletProvider: FC = ({ children }) => {
   const { url } = useConnection();
 
-  const [walletProviderUrl, setWalletProviderUrl] =
-    useLocalStorageState(WALLET_PROVIDER_KEY);
+  const [walletProviderUrl, setWalletProviderUrl] = useState(
+    getItem(WALLET_PROVIDER_KEY)
+  );
+  useEffect(() => {
+    setItem(WALLET_PROVIDER_KEY, walletProviderUrl);
+  }, [walletProviderUrl]);
 
   const walletProvider = useMemo(
     () =>
@@ -30,47 +38,44 @@ export function WalletProvider({ children = null as any }) {
   }, [walletProvider, walletProviderUrl, url]);
 
   const [connected, setConnected] = useState(false);
+  const onWalletAdapterConnection = useCallback(() => {
+    if (walletAdapter.publicKey) {
+      setConnected(true);
+      const walletPublicKey = walletAdapter.publicKey.toBase58();
+      const keyToDisplay =
+        walletPublicKey.length > 20
+          ? `${walletPublicKey.substring(0, 7)}.....${walletPublicKey.substring(
+              walletPublicKey.length - 7,
+              walletPublicKey.length
+            )}`
+          : walletPublicKey;
+
+      notify({
+        message: 'Wallet update',
+        description: 'Connected to wallet ' + keyToDisplay,
+      });
+    }
+  }, [setConnected, walletAdapter]);
+  const onWalletAdapterDisconnection = useCallback(() => {
+    setConnected(false);
+    notify({
+      message: 'Wallet update',
+      description: 'Disconnected from wallet',
+    });
+  }, [setConnected]);
 
   useEffect(() => {
     if (walletAdapter) {
-      walletAdapter.on('connect', () => {
-        if (walletAdapter.publicKey) {
-          setConnected(true);
-          const walletPublicKey = walletAdapter.publicKey.toBase58();
-          const keyToDisplay =
-            walletPublicKey.length > 20
-              ? `${walletPublicKey.substring(
-                  0,
-                  7
-                )}.....${walletPublicKey.substring(
-                  walletPublicKey.length - 7,
-                  walletPublicKey.length
-                )}`
-              : walletPublicKey;
-
-          notify({
-            message: 'Wallet update',
-            description: 'Connected to wallet ' + keyToDisplay,
-          });
-        }
-      });
-
-      walletAdapter.on('disconnect', () => {
-        setConnected(false);
-        notify({
-          message: 'Wallet update',
-          description: 'Disconnected from wallet',
-        });
-      });
+      walletAdapter.on('connect', onWalletAdapterConnection);
+      walletAdapter.on('disconnect', onWalletAdapterDisconnection);
     }
-
     return () => {
-      setConnected(false);
       if (walletAdapter) {
         walletAdapter.disconnect();
       }
+      setConnected(false);
     };
-  }, [walletAdapter]);
+  }, [walletAdapter, onWalletAdapterConnection, onWalletAdapterDisconnection]);
 
   const [autoConnect, setAutoConnect] = useState(false);
   useEffect(() => {
@@ -78,8 +83,6 @@ export function WalletProvider({ children = null as any }) {
       walletAdapter.connect();
       setAutoConnect(false);
     }
-
-    return () => {};
   }, [walletAdapter, autoConnect]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -105,4 +108,4 @@ export function WalletProvider({ children = null as any }) {
       />
     </WalletContext.Provider>
   );
-}
+};

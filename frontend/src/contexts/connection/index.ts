@@ -1,6 +1,6 @@
 import React from 'react';
 import { Connection } from '@solana/web3.js';
-import { DEFAULT_ENDPOINT } from '../../config/endpoints';
+import { DEFAULT_ENDPOINT } from '../../config/connectionEndpoints';
 import { ConnectionConfig } from './types';
 
 export const ConnectionContext = React.createContext<ConnectionConfig>({

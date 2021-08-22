@@ -1,19 +1,27 @@
-import { Connection } from '@solana/web3.js';
-import { useMemo } from 'react';
-import { CONNECTION_URLS_KEY } from '../constants';
-import { ConnectionContext } from '../contexts/connection';
-import { ENDPOINTS } from '../config/endpoints';
-import { useLocalStorageState } from '../hooks/useLocalStorage';
+import { FC, useEffect, useMemo, useState } from 'react';
 
-export function ConnectionProvider({ children = undefined as any }) {
-  const [url, setUrl] = useLocalStorageState(
-    CONNECTION_URLS_KEY,
-    ENDPOINTS[0].url
+import { Connection } from '@solana/web3.js';
+
+import { ConnectionContext } from '../contexts/connection';
+import { DEFAULT_ENDPOINT, ENDPOINTS } from '../config/connectionEndpoints';
+import { getItem, setItem } from '../utils/localStorage';
+
+export const CONNECTION_URLS_KEY = 'connectionUrls';
+
+export const ConnectionProvider: FC = ({ children }) => {
+  const [url, setUrl] = useState(
+    getItem(CONNECTION_URLS_KEY) || DEFAULT_ENDPOINT.url
   );
+  useEffect(() => {
+    setItem(CONNECTION_URLS_KEY, url);
+  }, [url]);
 
   const connection = useMemo(() => new Connection(url, 'confirmed'), [url]);
-
-  const endpoint = ENDPOINTS.find((end) => end.url === url) || ENDPOINTS[0];
+  const endpoint = useMemo(
+    () =>
+      ENDPOINTS.find((endpoint) => endpoint.url === url) || DEFAULT_ENDPOINT,
+    [url]
+  );
 
   return (
     <ConnectionContext.Provider
@@ -27,4 +35,4 @@ export function ConnectionProvider({ children = undefined as any }) {
       {children}
     </ConnectionContext.Provider>
   );
-}
+};

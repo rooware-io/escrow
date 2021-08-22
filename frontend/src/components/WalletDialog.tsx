@@ -6,7 +6,7 @@ import {
   DialogActions,
   DialogContent,
 } from '@material-ui/core';
-import { WALLET_PROVIDERS } from '../contexts/wallet/providers';
+import { WALLET_PROVIDERS } from '../config/walletProviders';
 
 export interface WalletDialogProps {
   isVisible: boolean;

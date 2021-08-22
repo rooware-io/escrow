@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { DARK_MODE_KEY } from '../constants';
+
 import { DarkModeContext } from '../contexts/darkMode';
-import { useLocalStorageState } from '../hooks/useLocalStorage';
+import { getItem, setItem } from '../utils/localStorage';
+
+export const DARK_MODE_KEY = 'darkMode';
 
 export const DarkModeProvider: React.FC = ({ children }) => {
-  const [isDarkModeEnabledRaw, setIsDarkModeEnabledRaw] = useLocalStorageState(
-    DARK_MODE_KEY,
-    undefined
-  );
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(
-    isDarkModeEnabledRaw === 'true'
+    getItem(DARK_MODE_KEY) === 'true'
   );
-
   useEffect(() => {
-    setIsDarkModeEnabledRaw(isDarkModeEnabled ? 'true' : 'false');
-  }, [isDarkModeEnabled, setIsDarkModeEnabledRaw]);
+    setItem(DARK_MODE_KEY, isDarkModeEnabled ? 'true' : 'false');
+  }, [isDarkModeEnabled]);
 
   return (
     <DarkModeContext.Provider

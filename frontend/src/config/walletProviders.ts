@@ -1,4 +1,4 @@
-import { WalletProvider } from './types';
+import { WalletProvider } from '../contexts/wallet/types';
 
 const ASSETS_URL =
   'https://raw.githubusercontent.com/solana-labs/oyster/main/assets/wallets/';
