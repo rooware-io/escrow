@@ -5,7 +5,7 @@ import {
   Transaction,
   TransactionInstruction,
 } from '@solana/web3.js';
-import { WalletAdapter } from '../contexts/wallet/types';
+import { WalletAdapter } from '../contexts/wallet';
 
 export async function sendTransaction(
   connection: Connection,

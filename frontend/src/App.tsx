@@ -8,6 +8,7 @@ import { useDarkMode } from './hooks/useDarkMode';
 import { ConnectionProvider } from './providers/ConnectionProvider';
 import { WalletProvider } from './providers/WalletProvider';
 import { Router } from './router/router';
+import { AccountProvider } from './providers/AccountProvider';
 
 const App = () => {
   const { isDarkModeEnabled } = useDarkMode();
@@ -16,7 +17,9 @@ const App = () => {
     <ThemeProvider theme={appliedTheme}>
       <ConnectionProvider>
         <WalletProvider>
-          <Router />
+          <AccountProvider>
+            <Router />
+          </AccountProvider>
         </WalletProvider>
       </ConnectionProvider>
     </ThemeProvider>
