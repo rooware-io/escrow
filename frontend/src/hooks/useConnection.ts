@@ -1,5 +1,6 @@
 import { useContext } from 'react';
-import { ConnectionContext } from '../contexts/connection';
+
+import { ConnectionContext } from '../contexts/connectionContext';
 import { getSolanaExplorerUrlSuffix } from '../lib/transaction';
 
 export function useConnection() {

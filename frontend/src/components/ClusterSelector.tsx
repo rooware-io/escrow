@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Endpoint } from '../contexts/connection';
+
+import { Endpoint } from '../contexts/connectionContext';
 import { useConnection } from '../hooks/useConnection';
 
 export interface ClusterSelectorProps {

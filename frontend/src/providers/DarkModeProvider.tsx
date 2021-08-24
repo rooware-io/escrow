@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { DarkModeContext } from '../contexts/darkMode';
+import { DarkModeContext } from '../contexts/darkModeContext';
 import { getItem, setItem } from '../utils/localStorage';
 
 export const DARK_MODE_KEY = 'darkMode';

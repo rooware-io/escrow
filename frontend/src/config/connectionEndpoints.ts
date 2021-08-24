@@ -1,5 +1,6 @@
 import { clusterApiUrl } from '@solana/web3.js';
-import { Endpoint } from '../contexts/connection';
+
+import { Endpoint } from '../contexts/connectionContext';
 
 export const ENDPOINTS: Endpoint[] = [
   {

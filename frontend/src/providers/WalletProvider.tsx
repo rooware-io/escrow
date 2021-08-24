@@ -3,7 +3,7 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import Wallet from '@project-serum/sol-wallet-adapter';
 
 import { WalletDialog } from '../components/WalletDialog';
-import { WalletContext } from '../contexts/wallet';
+import { WalletContext } from '../contexts/walletContext';
 import { useConnection } from '../hooks/useConnection';
 import { notify } from '../utils/notify';
 import { WALLET_PROVIDERS } from '../config/walletProviders';

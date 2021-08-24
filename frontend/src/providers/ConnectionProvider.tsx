@@ -2,7 +2,7 @@ import { FC, useEffect, useMemo, useState } from 'react';
 
 import { Connection } from '@solana/web3.js';
 
-import { ConnectionContext } from '../contexts/connection';
+import { ConnectionContext } from '../contexts/connectionContext';
 import { DEFAULT_ENDPOINT, ENDPOINTS } from '../config/connectionEndpoints';
 import { getItem, setItem } from '../utils/localStorage';
 

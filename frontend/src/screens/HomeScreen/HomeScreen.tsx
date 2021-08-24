@@ -1,30 +1,33 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 import { IconButton, Button, Card } from '@material-ui/core';
 import { Brightness3, Brightness7 } from '@material-ui/icons';
-import { NATIVE_MINT } from '@solana/spl-token';
+// import { NATIVE_MINT } from '@solana/spl-token';
 
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { useWallet } from '../../hooks/useWallet';
 import { ClusterSelector } from '../../components/ClusterSelector';
 import { ENDPOINTS } from '../../config/connectionEndpoints';
 import { useAccount } from '../../hooks/useAccount';
-import { findAssociatedTokenAddress } from '../../lib/accountManagement';
+import { TradeableAssetCard } from '../../components/TradeableAssetCard';
+// import {
+//   findAssociatedTokenAddress,
+//   getTokenAccountsInfo,
+// } from '../../lib/accountManagement';
+// import { useConnection } from '../../hooks/useConnection';
 
-const Home: FC = () => {
+const HomeScreen: FC = () => {
   const { isDarkModeEnabled, setIsDarkModeEnabled } = useDarkMode();
-  const { openWalletSelection, connected, disconnect, publicKey } = useWallet();
-  const { accountInfo } = useAccount();
+  const { openWalletSelection, connected, disconnect } = useWallet();
+  const { mainAccount, tokenAccounts } = useAccount();
 
-  useEffect(() => {
-    if (connected && publicKey) {
-      console.log('getting associated');
-      findAssociatedTokenAddress(publicKey, NATIVE_MINT)
-        .then((key) => console.log(`associated: ${key}`))
-        .catch((err) => console.error(err));
-    }
-  }, [connected, publicKey]);
-  console.log(accountInfo);
+  // useEffect(() => {
+  //   if (connected && publicKey) {
+  //     findAssociatedTokenAddress(publicKey, NATIVE_MINT).catch((err) =>
+  //       console.error(err)
+  //     );
+  //   }
+  // }, [connected, publicKey]);
   const icon = !isDarkModeEnabled ? <Brightness7 /> : <Brightness3 />;
   return (
     <>
@@ -50,9 +53,19 @@ const Home: FC = () => {
         </Button>
       )}
       <ClusterSelector endpoints={ENDPOINTS}></ClusterSelector>
-      {connected && <Card>Balance: {accountInfo?.lamports || 0}</Card>}
+      {connected && mainAccount && (
+        <Card style={{ marginBottom: 10 }}>
+          Balance: {mainAccount.lamports || 0}
+        </Card>
+      )}
+      {Object.values(tokenAccounts).map((account) => (
+        <TradeableAssetCard
+          key={account.publicKey.toString()}
+          tokenAccountInfo={account}
+        />
+      ))}
     </>
   );
 };
 
-export default Home;
+export default HomeScreen;

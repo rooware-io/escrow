@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from '../screens/Home/Home';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 export const Router: FC = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/">
-        <Home />
+        <HomeScreen />
       </Route>
     </Switch>
   </BrowserRouter>
