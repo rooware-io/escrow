@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Card } from '@material-ui/core';
 
-import { TokenAccountInfo } from '../lib/accountManagement';
+import { TokenAccountInfo } from '../../lib/accountManagement';
 
 export interface TradeableAssetCardProps {
   tokenAccountInfo: TokenAccountInfo;
