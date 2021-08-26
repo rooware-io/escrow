@@ -8,27 +8,24 @@ import {
 import {
   TOKEN_PROGRAM_ID,
   ASSOCIATED_TOKEN_PROGRAM_ID,
+  Token,
 } from '@solana/spl-token';
 
-export const findAssociatedTokenAddress = async (
+export const getAssociatedTokenAccountAddress = async (
   walletAddress: PublicKey,
   tokenMintAddress: PublicKey
-): Promise<PublicKey> => {
-  return (
-    await PublicKey.findProgramAddress(
-      [
-        walletAddress.toBuffer(),
-        TOKEN_PROGRAM_ID.toBuffer(),
-        tokenMintAddress.toBuffer(),
-      ],
-      ASSOCIATED_TOKEN_PROGRAM_ID
-    )
-  )[0];
-};
+): Promise<PublicKey> =>
+  await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
+    tokenMintAddress,
+    walletAddress
+  );
 
 export interface TokenAccountInfo {
   publicKey: PublicKey;
   amount: number;
+  mint: PublicKey;
 }
 
 export interface ParsedTokenAccountData {
@@ -39,10 +36,17 @@ export interface ParsedTokenAccountData {
   tokenAmount: TokenAmount;
 }
 
-export const getTokenAccountBalance = async (
-  connection: Connection,
+export const parseAccount = (
+  account: AccountInfo<ParsedAccountData>,
   address: PublicKey
-) => (await connection.getTokenAccountBalance(address)).value.uiAmount || 0;
+) => {
+  const accountInfo = account.data.parsed.info as ParsedTokenAccountData;
+  return {
+    publicKey: address,
+    amount: accountInfo.tokenAmount.amount,
+    mint: new PublicKey(accountInfo.mint),
+  };
+};
 
 export const getTokenAccountsInfo = async (
   connection: Connection,
@@ -62,16 +66,23 @@ export const getTokenAccountsInfo = async (
     pubkey: PublicKey;
     account: AccountInfo<ParsedAccountData>;
   }[];
+  accounts.forEach((account) => {
+    console.log(account);
+  });
 
-  const accountsMap = accounts.reduce((acc, { account, pubkey }) => {
-    const accountInfo = account.data.parsed.info as ParsedTokenAccountData;
-    return {
-      ...acc,
-      [pubkey.toString()]: {
-        publicKey: pubkey,
-        amount: accountInfo.tokenAmount.amount,
-      },
-    };
-  }, {});
+  const accountsMap = accounts.reduce(
+    (accumulator, { account, pubkey }) => ({
+      ...accumulator,
+      [account.owner.toString()]: parseAccount(account, pubkey),
+    }),
+    {}
+  );
   return accountsMap;
 };
+
+export const isAssociatedTokenAccount = async (
+  account: TokenAccountInfo,
+  owner: PublicKey
+) =>
+  account.publicKey ===
+  (await getAssociatedTokenAccountAddress(owner, account.mint));

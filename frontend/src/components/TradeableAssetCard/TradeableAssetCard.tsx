@@ -9,11 +9,9 @@ export interface TradeableAssetCardProps {
 
 export const TradeableAssetCard: FC<TradeableAssetCardProps> = ({
   tokenAccountInfo,
-}) => {
-  return (
-    <Card>
-      Account: {tokenAccountInfo.publicKey.toString()} - Amount:{' '}
-      {tokenAccountInfo.amount}
-    </Card>
-  );
-};
+}) => (
+  <Card>
+    Account: {tokenAccountInfo.publicKey.toString()} - Amount:{' '}
+    {tokenAccountInfo.amount}
+  </Card>
+);

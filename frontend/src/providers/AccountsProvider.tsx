@@ -5,10 +5,7 @@ import { AccountInfo } from '@solana/web3.js';
 import { AccountContext, TokenAccountsMap } from '../contexts/accountsContext';
 import { useConnection } from '../hooks/useConnection';
 import { useWallet } from '../hooks/useWallet';
-import {
-  getTokenAccountBalance,
-  getTokenAccountsInfo,
-} from '../lib/accountManagement';
+import { getTokenAccountsInfo } from '../lib/accountManagement';
 
 export function AccountsProvider({ children = null as any }) {
   const { connection } = useConnection();
@@ -30,29 +27,25 @@ export function AccountsProvider({ children = null as any }) {
       setMainAccount
     );
     getTokenAccountsInfo(connection, publicKey).then(setTokenAccounts);
+    // const tokenSubscriptionIds = Object.values(tokenAccounts).map(
+    //   ({ publicKey }) =>
+    //     connection.onAccountChange(publicKey, async (account) =>
+    //       setTokenAccounts({
+    //         ...tokenAccounts,
+    //         [publicKey.toString()]: {
+    //           publicKey: new PublicKey(1234),
+    //           amount: 0,
+    //         }, //parseAccount(account),
+    //       })
+    //     )
+    // );
     return () => {
       connection.removeAccountChangeListener(subscriptionId);
+      // tokenSubscriptionIds.forEach((id) =>
+      //   connection.removeAccountChangeListener(id)
+      // );
     };
   }, [connection, publicKey]);
-
-  useEffect(() => {
-    const tokenSubscriptionIds = Object.values(tokenAccounts).map(
-      ({ publicKey }) =>
-        connection.onAccountChange(publicKey, async () =>
-          setTokenAccounts({
-            ...tokenAccounts,
-            [publicKey.toString()]: {
-              publicKey,
-              amount: await getTokenAccountBalance(connection, publicKey),
-            },
-          })
-        )
-    );
-    return () =>
-      tokenSubscriptionIds.forEach((id) =>
-        connection.removeAccountChangeListener(id)
-      );
-  }, [connection, tokenAccounts]);
 
   return (
     <AccountContext.Provider
