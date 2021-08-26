@@ -1,4 +1,10 @@
-import { Connection, PublicKey } from '@solana/web3.js';
+import {
+  AccountInfo,
+  Connection,
+  ParsedAccountData,
+  PublicKey,
+  TokenAmount,
+} from '@solana/web3.js';
 import {
   TOKEN_PROGRAM_ID,
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -25,6 +31,14 @@ export interface TokenAccountInfo {
   amount: number;
 }
 
+export interface ParsedTokenAccountData {
+  isNative: boolean;
+  mint: string;
+  owner: string;
+  state: string;
+  tokenAmount: TokenAmount;
+}
+
 export const getTokenAccountBalance = async (
   connection: Connection,
   address: PublicKey
@@ -34,26 +48,30 @@ export const getTokenAccountsInfo = async (
   connection: Connection,
   owner: PublicKey
 ) => {
-  const accounts = await connection.getTokenAccountsByOwner(owner, {
-    programId: TOKEN_PROGRAM_ID,
-  });
+  const accounts = (await connection.getParsedProgramAccounts(
+    TOKEN_PROGRAM_ID,
+    {
+      filters: [
+        {
+          dataSize: 165, // obviously...
+        },
+        { memcmp: { offset: 32, bytes: owner.toBase58() } }, // obviously...
+      ],
+    }
+  )) as {
+    pubkey: PublicKey;
+    account: AccountInfo<ParsedAccountData>;
+  }[];
 
-  const accountsInfo = await Promise.all(
-    accounts.value.map(async (account) => ({
-      publicKey: account.pubkey,
-      amount: await getTokenAccountBalance(connection, account.pubkey),
-    }))
-  );
-
-  const accountsInfoMap = accountsInfo.reduce(
-    (acc, account) => ({
+  const accountsMap = accounts.reduce((acc, { account, pubkey }) => {
+    const accountInfo = account.data.parsed.info as ParsedTokenAccountData;
+    return {
       ...acc,
-      [account.publicKey.toString()]: {
-        publicKey: account.publicKey,
-        amount: account.amount,
+      [pubkey.toString()]: {
+        publicKey: pubkey,
+        amount: accountInfo.tokenAmount.amount,
       },
-    }),
-    {}
-  );
-  return accountsInfoMap;
+    };
+  }, {});
+  return accountsMap;
 };
