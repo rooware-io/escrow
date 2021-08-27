@@ -5,11 +5,11 @@ import { AccountInfo } from '@solana/web3.js';
 import { AccountContext, TokenAccountsMap } from '../contexts/accountsContext';
 import { useConnection } from '../hooks/useConnection';
 import { useWallet } from '../hooks/useWallet';
-import { getTokenAccountsInfo } from '../lib/accountManagement';
+import { getTokenAccountsInfo, parseTokenAccountData } from '../lib/account';
 
 export function AccountsProvider({ children = null as any }) {
   const { connection } = useConnection();
-  const { publicKey } = useWallet();
+  const { walletAddress } = useWallet();
 
   const [mainAccount, setMainAccount] = useState<AccountInfo<Buffer> | null>(
     null
@@ -18,34 +18,41 @@ export function AccountsProvider({ children = null as any }) {
 
   useEffect(() => {
     setMainAccount(null);
-    if (!publicKey) {
+    if (!walletAddress) {
       return;
     }
-    connection.getAccountInfo(publicKey).then(setMainAccount);
-    const subscriptionId = connection.onAccountChange(
-      publicKey,
+    connection.getAccountInfo(walletAddress).then(setMainAccount);
+    const mainAccountSubscriptionId = connection.onAccountChange(
+      walletAddress,
       setMainAccount
     );
-    getTokenAccountsInfo(connection, publicKey).then(setTokenAccounts);
-    // const tokenSubscriptionIds = Object.values(tokenAccounts).map(
-    //   ({ publicKey }) =>
-    //     connection.onAccountChange(publicKey, async (account) =>
-    //       setTokenAccounts({
-    //         ...tokenAccounts,
-    //         [publicKey.toString()]: {
-    //           publicKey: new PublicKey(1234),
-    //           amount: 0,
-    //         }, //parseAccount(account),
-    //       })
-    //     )
-    // );
+    getTokenAccountsInfo(connection, walletAddress).then(setTokenAccounts);
     return () => {
-      connection.removeAccountChangeListener(subscriptionId);
-      // tokenSubscriptionIds.forEach((id) =>
-      //   connection.removeAccountChangeListener(id)
-      // );
+      connection.removeAccountChangeListener(mainAccountSubscriptionId);
     };
-  }, [connection, publicKey]);
+  }, [connection, walletAddress]);
+
+  useEffect(() => {
+    const tokenAccountSubscriptionIds = Object.values(tokenAccounts).map(
+      (tokenAccount) =>
+        connection.onAccountChange(
+          tokenAccount.address,
+          async (updatedRawAccountInfo) =>
+            setTokenAccounts((currentTokenAccounts) => ({
+              ...currentTokenAccounts,
+              [tokenAccount.address.toString()]: parseTokenAccountData(
+                tokenAccount.address,
+                updatedRawAccountInfo
+              ),
+            }))
+        )
+    );
+    return () => {
+      tokenAccountSubscriptionIds.forEach((id) =>
+        connection.removeAccountChangeListener(id)
+      );
+    };
+  }, [connection, tokenAccounts]);
 
   return (
     <AccountContext.Provider

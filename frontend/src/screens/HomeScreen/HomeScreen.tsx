@@ -9,7 +9,7 @@ import { ClusterSelector } from '../../components/ClusterSelector';
 import { ENDPOINTS } from '../../config/connectionEndpoints';
 import { useAccount } from '../../hooks/useAccount';
 import { TradeableAssetCardGrid } from '../../components/TradeableAssetCardGrid/TradeableAssetCardGrid';
-import { isAssociatedTokenAccount } from '../../lib/accountManagement';
+import { isAssociatedTokenAccount } from '../../lib/account';
 
 const HomeScreen: FC = () => {
   const { isDarkModeEnabled, setIsDarkModeEnabled } = useDarkMode();
