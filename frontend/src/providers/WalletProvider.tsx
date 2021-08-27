@@ -2,8 +2,11 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import Wallet from '@project-serum/sol-wallet-adapter';
 
-import { WalletDialog } from '../components/WalletDialog';
-import { WalletContext } from '../contexts/walletContext';
+import { WalletSelectionDialog } from '../components/WalletSelectionDialog/WalletSelectionDialog';
+import {
+  WalletContext,
+  WalletProvider as WalletVendor,
+} from '../contexts/walletContext';
 import { useConnection } from '../hooks/useConnection';
 import { notify } from '../utils/notify';
 import { WALLET_PROVIDERS } from '../config/walletProviders';
@@ -90,6 +93,15 @@ export const WalletProvider: FC = ({ children }) => {
   const openWalletSelection = useCallback(() => setIsModalVisible(true), []);
   const closeWalletSelection = useCallback(() => setIsModalVisible(false), []);
 
+  const onSelectWallet = useCallback(
+    (walletProvider: WalletVendor) => () => {
+      setWalletProviderUrl(walletProvider.url);
+      setAutoConnect(true);
+      closeWalletSelection();
+    },
+    [setWalletProviderUrl, setAutoConnect, closeWalletSelection]
+  );
+
   return (
     <WalletContext.Provider
       value={{
@@ -100,11 +112,11 @@ export const WalletProvider: FC = ({ children }) => {
       }}
     >
       {children}
-      <WalletDialog
+      <WalletSelectionDialog
+        walletProviders={WALLET_PROVIDERS}
         isVisible={isModalVisible}
-        setWalletProviderUrl={setWalletProviderUrl}
-        closeWalletSelection={closeWalletSelection}
-        setAutoConnect={setAutoConnect}
+        onSelectWallet={onSelectWallet}
+        onClose={closeWalletSelection}
       />
     </WalletContext.Provider>
   );
