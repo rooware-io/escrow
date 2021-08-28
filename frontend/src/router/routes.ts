@@ -1,6 +1,6 @@
 const routes = {
   HOME: '/',
-  NEW_TRADE: '/new_trade',
+  CREATE_TRADE: '/create_trade',
 };
 
 export { routes };

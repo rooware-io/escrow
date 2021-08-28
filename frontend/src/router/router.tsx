@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+
+import { routes } from './routes';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import CreateTradeScreen from '../screens/CreateTradeScreen/CreateTradeScreen';
 
 export const Router: FC = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route path="/">
-        <HomeScreen />
-      </Route>
-    </Switch>
-  </BrowserRouter>
+  <Switch>
+    <Route path={routes.HOME} exact component={HomeScreen} />
+    <Route path={routes.CREATE_TRADE} exact component={CreateTradeScreen} />
+  </Switch>
 );

@@ -1,3 +1,4 @@
+import { ENV } from '@solana/spl-token-registry';
 import {
   clusterApiUrl,
   Connection,
@@ -5,6 +6,7 @@ import {
   Transaction,
   TransactionInstruction,
 } from '@solana/web3.js';
+import { ExtendedCluster } from '../contexts/connectionContext';
 
 import { WalletAdapter } from '../contexts/walletContext';
 
@@ -44,4 +46,15 @@ export function getSolanaExplorerUrlSuffix(endpointUrl: string) {
     return '?cluster=testnet';
   }
   return '';
+}
+
+export function getClusterId(cluster: ExtendedCluster) {
+  switch (cluster) {
+    case 'mainnet-beta':
+      return ENV.MainnetBeta;
+    case 'testnet':
+      return ENV.Testnet;
+    default:
+      return ENV.Devnet;
+  }
 }

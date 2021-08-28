@@ -1,17 +1,39 @@
 import React, { FC } from 'react';
-import { Card } from '@material-ui/core';
+import { Button, Card } from '@material-ui/core';
 
 import { TokenAccountInfo } from '../../lib/account';
+import { TokenInfo } from '@solana/spl-token-registry';
+
+// export type TokenInfoExtended = TokenInfo & TokenAccountInfo;
+export type TokenInfoExtended = Omit<TokenInfo, 'address'> & TokenAccountInfo;
 
 export interface TradeableAssetCardProps {
-  tokenAccountInfo: TokenAccountInfo;
+  tokenInfo: TokenInfoExtended;
+  onSelectAsset: (selectedToken: TokenInfoExtended) => void;
 }
 
 export const TradeableAssetCard: FC<TradeableAssetCardProps> = ({
-  tokenAccountInfo,
+  tokenInfo,
+  onSelectAsset,
 }) => (
-  <Card>
-    Account: {tokenAccountInfo.address.toString()} - Amount:{' '}
-    {tokenAccountInfo.amount.toString()}
+  <Card style={{ backgroundColor: '#AAA', marginBottom: '5px' }}>
+    <div>Account: {tokenInfo.address.toString()}</div>
+    <div>
+      Token: {tokenInfo.name} ({tokenInfo.symbol})
+    </div>
+    <div>Amount: {tokenInfo.amount.toString()}</div>
+
+    <Button
+      color="secondary"
+      variant="contained"
+      onClick={() => {
+        console.log('selecting');
+        console.log(tokenInfo);
+
+        onSelectAsset(tokenInfo);
+      }}
+    >
+      Create trade
+    </Button>
   </Card>
 );

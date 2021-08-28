@@ -6,10 +6,13 @@ import { AccountContext, TokenAccountsMap } from '../contexts/accountsContext';
 import { useConnection } from '../hooks/useConnection';
 import { useWallet } from '../hooks/useWallet';
 import { getTokenAccountsInfo, parseTokenAccountData } from '../lib/account';
+import { useHistory } from 'react-router-dom';
+import { routes } from '../router/routes';
 
 export function AccountsProvider({ children = null as any }) {
   const { connection } = useConnection();
   const { walletAddress } = useWallet();
+  const { push } = useHistory();
 
   const [mainAccount, setMainAccount] = useState<AccountInfo<Buffer> | null>(
     null
@@ -18,6 +21,7 @@ export function AccountsProvider({ children = null as any }) {
 
   useEffect(() => {
     setMainAccount(null);
+    push(routes.HOME);
     if (!walletAddress) {
       return;
     }
@@ -30,7 +34,7 @@ export function AccountsProvider({ children = null as any }) {
     return () => {
       connection.removeAccountChangeListener(mainAccountSubscriptionId);
     };
-  }, [connection, walletAddress]);
+  }, [connection, walletAddress, push]);
 
   useEffect(() => {
     const tokenAccountSubscriptionIds = Object.values(tokenAccounts).map(

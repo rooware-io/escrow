@@ -6,6 +6,7 @@ import {
 } from '@solana/spl-token';
 import { Numberu64 } from '@solana/spl-name-service';
 import { AccountLayout } from './layout';
+import { TokenInfo } from '@solana/spl-token-registry';
 
 export interface TokenAccountInfo {
   address: PublicKey;
@@ -54,7 +55,7 @@ export const getTokenAccountsInfo = async (
     .reduce(
       (accumulator, account) => ({
         ...accumulator,
-        [account.owner.toString()]: account,
+        [account.address.toString()]: account,
       }),
       {}
     );
@@ -76,3 +77,8 @@ export const isAssociatedTokenAccount = async (
 ) =>
   account.address ===
   (await getAssociatedTokenAccountAddress(owner, account.mint));
+
+export const isKnownToken = (
+  address: PublicKey,
+  tokenMap: Map<string, TokenInfo>
+) => tokenMap.has(address.toString());

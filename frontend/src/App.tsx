@@ -1,8 +1,10 @@
 import React from 'react';
 
-import './App.css';
 import { ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
+import { BrowserRouter } from 'react-router-dom';
+
+import './App.css';
 import { dark, light } from './assets/theme';
 import { useDarkMode } from './hooks/useDarkMode';
 import { ConnectionProvider } from './providers/ConnectionProvider';
@@ -15,13 +17,15 @@ const App = () => {
   const appliedTheme = createTheme(isDarkModeEnabled ? dark : light);
   return (
     <ThemeProvider theme={appliedTheme}>
-      <ConnectionProvider>
-        <WalletProvider>
-          <AccountsProvider>
-            <Router />
-          </AccountsProvider>
-        </WalletProvider>
-      </ConnectionProvider>
+      <BrowserRouter>
+        <ConnectionProvider>
+          <WalletProvider>
+            <AccountsProvider>
+              <Router />
+            </AccountsProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };

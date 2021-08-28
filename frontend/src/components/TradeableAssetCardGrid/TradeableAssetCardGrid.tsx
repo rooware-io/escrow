@@ -1,21 +1,26 @@
 import React, { FC } from 'react';
 import { Grid } from '@material-ui/core';
 
-import { TokenAccountInfo } from '../../lib/account';
-import { TradeableAssetCard } from '../TradeableAssetCard/TradeableAssetCard';
+import {
+  TokenInfoExtended,
+  TradeableAssetCard,
+} from '../TradeableAssetCard/TradeableAssetCard';
 
 export interface TradeableAssetCardGridProps {
-  tokenAccounts: TokenAccountInfo[];
+  tokenInfos: TokenInfoExtended[];
+  onSelectAsset: (selectedToken: TokenInfoExtended) => void;
 }
 
 export const TradeableAssetCardGrid: FC<TradeableAssetCardGridProps> = ({
-  tokenAccounts,
+  tokenInfos,
+  onSelectAsset,
 }) => (
   <Grid>
-    {tokenAccounts.map((account) => (
+    {tokenInfos.map((account) => (
       <TradeableAssetCard
         key={account.address.toString()}
-        tokenAccountInfo={account}
+        tokenInfo={account}
+        onSelectAsset={onSelectAsset}
       />
     ))}
   </Grid>

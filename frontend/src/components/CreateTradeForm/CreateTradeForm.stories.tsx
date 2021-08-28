@@ -1,26 +1,27 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Numberu64 } from '@solana/spl-name-service';
 import { PublicKey } from '@solana/web3.js';
 
-import { TradeableAssetCard } from './TradeableAssetCard';
-import { Numberu64 } from '@solana/spl-name-service';
+import { CreateTradeForm } from './CreateTradeForm';
 import { tokenMapFixture } from '../../tests/fixtures';
 
 export default {
-  title: 'Components/TradeableAssetCard',
-  component: TradeableAssetCard,
+  title: 'Components/CreateTradeForm',
+  component: CreateTradeForm,
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-} as ComponentMeta<typeof TradeableAssetCard>;
+} as ComponentMeta<typeof CreateTradeForm>;
 
-const Template: ComponentStory<typeof TradeableAssetCard> = (args) => (
-  <TradeableAssetCard {...args} />
+const Template: ComponentStory<typeof CreateTradeForm> = (args) => (
+  <CreateTradeForm {...args} />
 );
 
 export const Primary = Template.bind({});
 Primary.args = {
-  tokenInfo: {
+  tokenMap: new Map(Object.entries(tokenMapFixture)),
+  tokenSoldInfo: {
     ...tokenMapFixture['LLAMA'],
     amount: new Numberu64(1234),
     mint: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),

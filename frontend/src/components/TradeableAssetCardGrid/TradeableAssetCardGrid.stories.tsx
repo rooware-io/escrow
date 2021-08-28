@@ -4,6 +4,7 @@ import { PublicKey } from '@solana/web3.js';
 
 import { TradeableAssetCardGrid } from './TradeableAssetCardGrid';
 import { Numberu64 } from '@solana/spl-name-service';
+import { tokenMapFixture } from '../../tests/fixtures';
 
 export default {
   title: 'Components/TradeableAssetCardGrid',
@@ -19,20 +20,22 @@ const Template: ComponentStory<typeof TradeableAssetCardGrid> = (args) => (
 
 export const Primary = Template.bind({});
 Primary.args = {
-  tokenAccounts: [
+  tokenInfos: [
     {
+      ...tokenMapFixture['LLAMA'],
       amount: new Numberu64(1234),
-      address: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
       mint: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
       owner: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
       state: 'initialized',
+      address: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
     },
     {
-      amount: new Numberu64(9876543),
-      address: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
-      mint: new PublicKey('HUYV5CuPV6ifmfHb9nvg37RMJmfzjojp1LUcmTrYNcGV'),
+      ...tokenMapFixture['SOL'],
+      amount: new Numberu64(1234),
+      mint: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
       owner: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
       state: 'initialized',
+      address: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
     },
   ],
 };
