@@ -18,5 +18,6 @@ const Template: ComponentStory<typeof ClusterSelector> = (args) => (
 
 export const Primary = Template.bind({});
 Primary.args = {
-  endpoints: [{ name: ENDPOINTS[0].name, url: 'blah1' }],
+  endpoints: ENDPOINTS,
+  clusterUrl: 'blah1',
 };

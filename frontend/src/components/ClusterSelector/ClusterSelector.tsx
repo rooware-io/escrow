@@ -1,20 +1,23 @@
 import React, { FC } from 'react';
 
 import { Endpoint } from '../../contexts/connectionContext';
-import { useConnection } from '../../hooks/useConnection';
 
 export interface ClusterSelectorProps {
   endpoints: Endpoint[];
+  clusterUrl: string;
+  setClusterUrl: (val: string) => void;
 }
 
-export const ClusterSelector: FC<ClusterSelectorProps> = ({ endpoints }) => {
-  const { url, setUrl } = useConnection();
-
+export const ClusterSelector: FC<ClusterSelectorProps> = ({
+  endpoints,
+  clusterUrl,
+  setClusterUrl,
+}) => {
   return (
     <select
       className="solBtnGray"
-      value={url}
-      onChange={(e) => setUrl(e.target.value as string)}
+      value={clusterUrl}
+      onChange={(e) => setClusterUrl(e.target.value)}
     >
       {endpoints.map(({ name, url }) => (
         <option value={url} key={url}>

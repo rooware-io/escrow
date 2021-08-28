@@ -26,12 +26,7 @@ export const TradeableAssetCard: FC<TradeableAssetCardProps> = ({
     <Button
       color="secondary"
       variant="contained"
-      onClick={() => {
-        console.log('selecting');
-        console.log(tokenInfo);
-
-        onSelectAsset(tokenInfo);
-      }}
+      onClick={() => onSelectAsset(tokenInfo)}
     >
       Create trade
     </Button>

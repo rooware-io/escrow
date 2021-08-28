@@ -1,7 +1,7 @@
 import { TokenInfo } from '@solana/spl-token-registry';
 
 export const tokenMapFixture: { [symbol: string]: TokenInfo } = {
-  USDC: {
+  EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: {
     chainId: 101,
     address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
     symbol: 'USDC',
@@ -16,7 +16,7 @@ export const tokenMapFixture: { [symbol: string]: TokenInfo } = {
       serumV3Usdt: '77quYg4MGneUdjgXCunt9GgM1usmrxKY31twEy3WHwcS',
     },
   },
-  TOX: {
+  '9pQKy9V21TzY8xPS7MJB1vLfhvooGe6gmZxeV34qrPwB': {
     chainId: 101,
     address: '9pQKy9V21TzY8xPS7MJB1vLfhvooGe6gmZxeV34qrPwB',
     symbol: 'TOX',
@@ -30,8 +30,7 @@ export const tokenMapFixture: { [symbol: string]: TokenInfo } = {
       twitter: 'https://twitter.com/SollamaFinance',
     },
   },
-
-  LLAMA: {
+  '9nusLQeFKiocswDt6NQsiErm1M43H2b8x6v5onhivqKv': {
     chainId: 101,
     address: '9nusLQeFKiocswDt6NQsiErm1M43H2b8x6v5onhivqKv',
     symbol: 'LLAMA',

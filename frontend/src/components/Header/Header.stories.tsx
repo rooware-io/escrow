@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Header } from './Header';
+import { ENDPOINTS } from '../../config/connectionEndpoints';
 
 export default {
   title: 'Components/Header',
@@ -14,4 +15,10 @@ export default {
 const Template: ComponentStory<typeof Header> = (args) => <Header {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  clusterUrl: 'blah1',
+  endpoints: ENDPOINTS,
+  isWalletConnected: true,
+  navigateTo: (route: string) => window.alert(`navigating to ${route}`),
+  disconnectWallet: () => {},
+};
