@@ -8,7 +8,7 @@ export interface ClusterSelectorProps {
   setClusterUrl: (val: string) => void;
 }
 
-export const ClusterSelector: FC<ClusterSelectorProps> = ({
+const ClusterSelector: FC<ClusterSelectorProps> = ({
   endpoints,
   clusterUrl,
   setClusterUrl,
@@ -27,3 +27,5 @@ export const ClusterSelector: FC<ClusterSelectorProps> = ({
     </select>
   );
 };
+
+export default ClusterSelector;

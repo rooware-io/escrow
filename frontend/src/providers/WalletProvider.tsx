@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import Wallet from '@project-serum/sol-wallet-adapter';
 
-import { WalletSelectionDialog } from '../components/WalletSelectionDialog/WalletSelectionDialog';
+import WalletSelectionDialog from '../components/WalletSelectionDialog';
 import {
   WalletContext,
   WalletProvider as WalletVendor,

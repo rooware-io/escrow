@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { CreateTradeDialog } from './CreateTradeDialog';
+import CreateTradeDialog from './CreateTradeDialog';
 import { Button } from '@material-ui/core';
 import { Numberu64 } from '@solana/spl-name-service';
 import { PublicKey } from '@solana/web3.js';

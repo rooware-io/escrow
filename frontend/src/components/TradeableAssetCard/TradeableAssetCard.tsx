@@ -12,7 +12,7 @@ export interface TradeableAssetCardProps {
   onSelectAsset: (selectedToken: TokenInfoExtended) => void;
 }
 
-export const TradeableAssetCard: FC<TradeableAssetCardProps> = ({
+const TradeableAssetCard: FC<TradeableAssetCardProps> = ({
   tokenInfo,
   onSelectAsset,
 }) => (
@@ -32,3 +32,5 @@ export const TradeableAssetCard: FC<TradeableAssetCardProps> = ({
     </Button>
   </Card>
 );
+
+export default TradeableAssetCard;

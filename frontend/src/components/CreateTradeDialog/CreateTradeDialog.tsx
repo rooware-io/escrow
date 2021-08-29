@@ -6,7 +6,7 @@ import {
   DialogContent,
 } from '@material-ui/core';
 import { TokenInfo } from '@solana/spl-token-registry';
-import { CreateTradeForm } from '../CreateTradeForm/CreateTradeForm';
+import CreateTradeForm from '../CreateTradeForm';
 import { TokenInfoExtended } from '../TradeableAssetCard/TradeableAssetCard';
 
 export interface CreateTradeDialogProps {
@@ -16,7 +16,7 @@ export interface CreateTradeDialogProps {
   tokenMap: Map<string, TokenInfo>;
 }
 
-export const CreateTradeDialog: FC<CreateTradeDialogProps> = ({
+const CreateTradeDialog: FC<CreateTradeDialogProps> = ({
   isVisible,
   onClose,
   tokenSoldInfo,
@@ -40,3 +40,5 @@ export const CreateTradeDialog: FC<CreateTradeDialogProps> = ({
     </Dialog>
   );
 };
+
+export default CreateTradeDialog;

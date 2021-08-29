@@ -1,17 +1,14 @@
 import React, { FC } from 'react';
 import { Grid } from '@material-ui/core';
 
-import {
-  TokenInfoExtended,
-  TradeableAssetCard,
-} from '../TradeableAssetCard/TradeableAssetCard';
+import TradeableAssetCard, { TokenInfoExtended } from '../TradeableAssetCard';
 
 export interface TradeableAssetCardGridProps {
   tokenInfos: TokenInfoExtended[];
   onSelectAsset: (selectedToken: TokenInfoExtended) => void;
 }
 
-export const TradeableAssetCardGrid: FC<TradeableAssetCardGridProps> = ({
+const TradeableAssetCardGrid: FC<TradeableAssetCardGridProps> = ({
   tokenInfos,
   onSelectAsset,
 }) => (
@@ -25,3 +22,5 @@ export const TradeableAssetCardGrid: FC<TradeableAssetCardGridProps> = ({
     ))}
   </Grid>
 );
+
+export default TradeableAssetCardGrid;

@@ -2,11 +2,11 @@ import { FC, useCallback, useState } from 'react';
 
 import { useAccount } from '../../hooks/useAccount';
 import { useTokenRegistry } from '../../hooks/useTokenRegistry';
-import { CreateTradeDialog } from '../../components/CreateTradeDialog/CreateTradeDialog';
-import { TokenInfoExtended } from '../../components/TradeableAssetCard/TradeableAssetCard';
-import { TradeableAssetCardGrid } from '../../components/TradeableAssetCardGrid/TradeableAssetCardGrid';
+import CreateTradeDialog from '../../components/CreateTradeDialog';
+import TradeableAssetCardGrid from '../../components/TradeableAssetCardGrid';
 import { ENDPOINTS } from '../../config/connectionEndpoints';
-import { Header } from '../../components/Header/Header';
+import Header from '../../components/Header';
+import { TokenInfoExtended } from '../../components/TradeableAssetCard/TradeableAssetCard';
 
 const CreateTradeScreen: FC = () => {
   const { mainAccount, tokenAccounts } = useAccount();

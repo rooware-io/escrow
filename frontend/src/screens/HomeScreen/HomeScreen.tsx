@@ -7,7 +7,7 @@ import { ENDPOINTS } from '../../config/connectionEndpoints';
 import { useAccount } from '../../hooks/useAccount';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../router/routes';
-import { Header } from '../../components/Header/Header';
+import Header from '../../components/Header';
 
 const HomeScreen: FC = () => {
   // const { isDarkModeEnabled, setIsDarkModeEnabled } = useDarkMode();

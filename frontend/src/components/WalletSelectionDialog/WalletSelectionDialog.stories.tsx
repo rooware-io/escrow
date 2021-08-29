@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { WalletSelectionDialog } from './WalletSelectionDialog';
+import WalletSelectionDialog from './WalletSelectionDialog';
 import { ASSETS_URL } from '../../config/walletProviders';
 import { Button } from '@material-ui/core';
 import { WalletProvider } from '../../contexts/walletContext';

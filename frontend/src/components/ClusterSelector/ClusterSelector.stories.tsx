@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { ClusterSelector } from './ClusterSelector';
+import ClusterSelector from './ClusterSelector';
 import { ENDPOINTS } from '../../config/connectionEndpoints';
 
 export default {

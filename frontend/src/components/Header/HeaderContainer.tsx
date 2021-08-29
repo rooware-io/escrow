@@ -10,7 +10,7 @@ export interface HeaderContainerProps {
   endpoints: Endpoint[];
 }
 
-export const HeaderContainer: FC<HeaderContainerProps> = ({ endpoints }) => {
+const HeaderContainer: FC<HeaderContainerProps> = ({ endpoints }) => {
   const { openWalletSelection, connected, disconnect } = useWallet();
   const { push } = useHistory();
   const { url, setUrl } = useConnection();
@@ -26,3 +26,5 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({ endpoints }) => {
     />
   );
 };
+
+export default HeaderContainer;

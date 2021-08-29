@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { PublicKey } from '@solana/web3.js';
 
-import { TradeableAssetCard } from './TradeableAssetCard';
+import TradeableAssetCard from './TradeableAssetCard';
 import { Numberu64 } from '@solana/spl-name-service';
 import { tokenMapFixture } from '../../tests/fixtures';
 

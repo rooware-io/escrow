@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { Button, IconButton } from '@material-ui/core';
 
-import { Endpoint, ExtendedCluster } from '../../contexts/connectionContext';
-import { ClusterSelector } from '../ClusterSelector/ClusterSelector';
+import { Endpoint } from '../../contexts/connectionContext';
+import ClusterSelector from '../ClusterSelector';
 import { routes } from '../../router/routes';
 import { HomeOutlined } from '@material-ui/icons';
 

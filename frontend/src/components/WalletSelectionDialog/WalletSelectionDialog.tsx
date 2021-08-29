@@ -16,7 +16,7 @@ export interface WalletSelectionDialogProps {
   onClose: () => void;
 }
 
-export const WalletSelectionDialog: FC<WalletSelectionDialogProps> = ({
+const WalletSelectionDialog: FC<WalletSelectionDialogProps> = ({
   walletProviders,
   isVisible,
   onSelectWallet,
@@ -63,3 +63,5 @@ export const WalletSelectionDialog: FC<WalletSelectionDialogProps> = ({
     </DialogActions>
   </Dialog>
 );
+
+export default WalletSelectionDialog;

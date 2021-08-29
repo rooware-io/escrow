@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Numberu64 } from '@solana/spl-name-service';
 import { PublicKey } from '@solana/web3.js';
 
-import { CreateTradeForm } from './CreateTradeForm';
+import CreateTradeForm from './CreateTradeForm';
 import { tokenMapFixture } from '../../tests/fixtures';
 
 export default {

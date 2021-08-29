@@ -17,7 +17,7 @@ export interface CreateTradeFormProps {
   tokenMap: Map<string, TokenInfo>;
 }
 
-export const CreateTradeForm: FC<CreateTradeFormProps> = ({
+const CreateTradeForm: FC<CreateTradeFormProps> = ({
   tokenSoldInfo,
   tokenMap,
 }) => {
@@ -126,3 +126,5 @@ export const CreateTradeForm: FC<CreateTradeFormProps> = ({
     </form>
   );
 };
+
+export default CreateTradeForm;
