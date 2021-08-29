@@ -1,17 +1,23 @@
-import { AccountInfo, Connection, PublicKey } from '@solana/web3.js';
+import {
+  AccountInfo,
+  Connection,
+  ParsedAccountData,
+  PublicKey,
+} from '@solana/web3.js';
 import {
   TOKEN_PROGRAM_ID,
   ASSOCIATED_TOKEN_PROGRAM_ID,
   Token,
 } from '@solana/spl-token';
-import { Numberu64 } from '@solana/spl-name-service';
-import { AccountLayout } from './layout';
 import { TokenInfo } from '@solana/spl-token-registry';
+import BN from 'bn.js';
+
+import { AccountLayout } from './layout';
 
 export interface TokenAccountInfo {
   address: PublicKey;
   owner: PublicKey;
-  amount: Numberu64;
+  amount: BN;
   mint: PublicKey;
   state: string;
 }
@@ -30,7 +36,7 @@ export const parseTokenAccountData = (
     address,
     mint: new PublicKey(decoded.mint),
     owner: new PublicKey(decoded.owner),
-    amount: Numberu64.fromBuffer(decoded.amount),
+    amount: new BN(decoded.amount, 10, 'le'),
     state: decoded.state,
   };
 };
@@ -82,3 +88,10 @@ export const isKnownToken = (
   address: PublicKey,
   tokenMap: Map<string, TokenInfo>
 ) => tokenMap.has(address.toString());
+
+export const getTokenAccountMint = async (
+  connection: Connection,
+  tokenAccountAddress: PublicKey
+) =>
+  ((await connection.getParsedAccountInfo(tokenAccountAddress, 'singleGossip'))
+    .value!.data as ParsedAccountData).parsed.info.mint;

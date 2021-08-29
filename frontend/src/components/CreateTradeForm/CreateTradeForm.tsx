@@ -1,15 +1,15 @@
 import React, { FC, useCallback, useState } from 'react';
-import { Numberu64 } from '@solana/spl-name-service';
 import { TokenInfo } from '@solana/spl-token-registry';
+import BN from 'bn.js';
 
 import { TokenInfoExtended } from '../TradeableAssetCard/TradeableAssetCard';
 
 const NUMBER_REGEX = /^[0-9\b]+$/;
 
 export interface TradeInputs {
-  tokenSoldAmount: Numberu64;
+  tokenSoldAmount: BN;
   tokenBoughtMint: string;
-  tokenBoughtAmount: Numberu64;
+  tokenBoughtAmount: BN;
 }
 
 export interface CreateTradeFormProps {
@@ -25,8 +25,8 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
     throw Error('No available mints found to trade against');
   }
   const [tradeInputs, setTradeInputs] = useState<TradeInputs>({
-    tokenSoldAmount: new Numberu64(0),
-    tokenBoughtAmount: new Numberu64(0),
+    tokenSoldAmount: new BN(0),
+    tokenBoughtAmount: new BN(0),
     tokenBoughtMint: [...tokenMap.values()][0].address,
   });
 
@@ -41,7 +41,7 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
       );
       event.preventDefault();
     },
-    [tradeInputs]
+    [tradeInputs, tokenMap, tokenSoldInfo.symbol]
   );
 
   const onSoldAmountChange = useCallback(
@@ -50,7 +50,7 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
       if (value === '' || NUMBER_REGEX.test(value)) {
         setTradeInputs((currentTradeInputs) => ({
           ...currentTradeInputs,
-          tokenSoldAmount: new Numberu64(value),
+          tokenSoldAmount: new BN(value),
         }));
       }
     },
@@ -63,7 +63,7 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
       if (value === '' || NUMBER_REGEX.test(value)) {
         setTradeInputs((currentTradeInputs) => ({
           ...currentTradeInputs,
-          tokenBoughtAmount: new Numberu64(value),
+          tokenBoughtAmount: new BN(value),
         }));
       }
     },
@@ -76,7 +76,7 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
       setTradeInputs((currentTradeInputs) => ({
         ...currentTradeInputs,
         tokenBoughtMint: value,
-        tokenBoughtAmount: new Numberu64(0),
+        tokenBoughtAmount: new BN(0),
       }));
     },
     [setTradeInputs]

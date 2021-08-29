@@ -2,14 +2,14 @@ import { FC, useCallback, useState } from 'react';
 
 import { useAccount } from '../../hooks/useAccount';
 import { useTokenRegistry } from '../../hooks/useTokenRegistry';
-import CreateTradeDialog from '../../components/CreateTradeDialog';
-import TradeableAssetCardGrid from '../../components/TradeableAssetCardGrid';
+import CreateTradeDialog from '../../components/CreateTradeDialog/CreateTradeDialog';
+import TradeableAssetCardGrid from '../../components/TradeableAssetCardGrid/TradeableAssetCardGrid';
 import { ENDPOINTS } from '../../config/connectionEndpoints';
-import Header from '../../components/Header';
+import Header from '../../components/Header/HeaderContainer';
 import { TokenInfoExtended } from '../../components/TradeableAssetCard/TradeableAssetCard';
 import { isKnownToken } from '../../lib/account';
 
-const CreateTradeScreen: FC = () => {
+const AssetsScreen: FC = () => {
   const { mainAccount, tokenAccounts } = useAccount();
   const { tokenMap } = useTokenRegistry();
 
@@ -78,4 +78,4 @@ const CreateTradeScreen: FC = () => {
   );
 };
 
-export default CreateTradeScreen;
+export default AssetsScreen;

@@ -14,7 +14,7 @@ export async function sendTransaction(
   connection: Connection,
   wallet: WalletAdapter,
   instructions: TransactionInstruction[],
-  signers: Signer[]
+  signers?: Signer[]
 ) {
   if (!wallet?.publicKey) {
     throw new Error('Wallet is not connected');
@@ -25,13 +25,13 @@ export async function sendTransaction(
   transaction.recentBlockhash = (
     await connection.getRecentBlockhash('finalized')
   ).blockhash;
-  if (signers.length > 0) {
+  if (signers && signers.length > 0) {
     transaction.partialSign(...signers);
   }
   transaction = await wallet.signTransaction(transaction);
   const rawTransaction = transaction.serialize();
   let options = {
-    skipPreflight: true,
+    skipPreflight: true, // implications?
     commitment: 'processed',
   };
 

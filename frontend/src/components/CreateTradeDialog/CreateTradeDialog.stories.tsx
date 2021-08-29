@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Button } from '@material-ui/core';
+import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
 
 import CreateTradeDialog from './CreateTradeDialog';
-import { Button } from '@material-ui/core';
-import { Numberu64 } from '@solana/spl-name-service';
-import { PublicKey } from '@solana/web3.js';
 import { tokenMapFixture } from '../../tests/fixtures';
 
 export default {
@@ -36,7 +36,7 @@ Primary.args = {
   tokenMap: new Map(Object.entries(tokenMapFixture)),
   tokenSoldInfo: {
     ...tokenMapFixture['SOL'],
-    amount: new Numberu64(1234),
+    amount: new BN(1234),
     mint: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
     owner: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
     state: 'initialized',

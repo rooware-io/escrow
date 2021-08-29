@@ -1,6 +1,7 @@
 const routes = {
   HOME: '/',
-  CREATE_TRADE: '/create_trade',
+  ASSETS: '/assets',
+  TRADES: '/trades',
 };
 
 export { routes };

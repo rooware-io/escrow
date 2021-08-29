@@ -43,9 +43,13 @@ export const Header: FC<HeaderProps> = ({
         Connect wallet
       </Button>
     ) : (
-      <Button variant="outlined" color="secondary" onClick={disconnectWallet}>
-        Disconnect wallet
-      </Button>
+      <>
+        <Button onClick={() => navigateTo(routes.TRADES)}>My trades</Button>
+        <Button onClick={() => navigateTo(routes.ASSETS)}>My assets</Button>
+        <Button variant="outlined" color="secondary" onClick={disconnectWallet}>
+          Disconnect wallet
+        </Button>
+      </>
     )}
     <ClusterSelector
       endpoints={endpoints}

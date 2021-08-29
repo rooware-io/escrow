@@ -17,3 +17,19 @@ export const AccountLayout = struct([
   u32('closeAuthorityOption'),
   publicKey('closeAuthority'),
 ]);
+
+export interface EscrowLayout {
+  isInitialized: number;
+  initializerPubkey: Uint8Array;
+  initializerReceivingTokenAccountPubkey: Uint8Array;
+  initializerTempTokenAccountPubkey: Uint8Array;
+  expectedAmount: Uint8Array;
+}
+
+export const ESCROW_ACCOUNT_DATA_LAYOUT = struct([
+  u8('isInitialized'),
+  publicKey('initializerPubkey'),
+  publicKey('initializerTempTokenAccountPubkey'),
+  publicKey('initializerReceivingTokenAccountPubkey'),
+  uint64('expectedAmount'),
+]);
