@@ -8,7 +8,7 @@ const NUMBER_REGEX = /^[0-9\b]+$/;
 
 export interface TradeInputs {
   tokenSoldAmount: Numberu64;
-  tokenBoughtAddress: string;
+  tokenBoughtMint: string;
   tokenBoughtAmount: Numberu64;
 }
 
@@ -27,8 +27,22 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
   const [tradeInputs, setTradeInputs] = useState<TradeInputs>({
     tokenSoldAmount: new Numberu64(0),
     tokenBoughtAmount: new Numberu64(0),
-    tokenBoughtAddress: [...tokenMap.values()][0].address,
+    tokenBoughtMint: [...tokenMap.values()][0].address,
   });
+
+  const onSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      window.alert(
+        `Trading ${tradeInputs.tokenSoldAmount.toString()} ${
+          tokenSoldInfo.symbol
+        } for ${tradeInputs.tokenBoughtAmount.toString()} ${
+          tokenMap.get(tradeInputs.tokenBoughtMint)!.symbol
+        }`
+      );
+      event.preventDefault();
+    },
+    [tradeInputs]
+  );
 
   const onSoldAmountChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +75,7 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
       const value = event.target.value;
       setTradeInputs((currentTradeInputs) => ({
         ...currentTradeInputs,
-        tokenBoughtAddress: value,
+        tokenBoughtMint: value,
         tokenBoughtAmount: new Numberu64(0),
       }));
     },
@@ -69,18 +83,7 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
   );
 
   return (
-    <form
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-        window.alert(
-          `Trading ${tradeInputs.tokenSoldAmount.toString()} ${
-            tokenSoldInfo.symbol
-          } for ${tradeInputs.tokenBoughtAmount.toString()} ${
-            tradeInputs.tokenBoughtAddress
-          }`
-        );
-        event.preventDefault();
-      }}
-    >
+    <form onSubmit={onSubmit}>
       <label>
         Trade:{' '}
         <div>
@@ -107,7 +110,7 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
       </label>
       <label>
         <select
-          value={tradeInputs.tokenBoughtAddress}
+          value={tradeInputs.tokenBoughtMint}
           onChange={onBoughtMintChange}
         >
           {[...tokenMap.values()].map(({ address, name }) => (
@@ -118,8 +121,8 @@ const CreateTradeForm: FC<CreateTradeFormProps> = ({
         </select>
       </label>
       <img
-        alt={tradeInputs.tokenBoughtAddress}
-        src={tokenMap.get(tradeInputs.tokenBoughtAddress)!.logoURI}
+        alt={tradeInputs.tokenBoughtMint}
+        src={tokenMap.get(tradeInputs.tokenBoughtMint)!.logoURI}
         style={{ height: '30px', width: '30px' }}
       />
       <input type="submit" value="Submit" />

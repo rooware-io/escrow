@@ -22,20 +22,20 @@ export const Primary = Template.bind({});
 Primary.args = {
   tokenInfos: [
     {
-      ...tokenMapFixture['LLAMA'],
+      ...tokenMapFixture['C5NBj4qaiDXqpwnuonnQTGDA9RfXdJt4yzAp2EwSaLD9'],
       amount: new Numberu64(1234),
-      mint: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
+      mint: new PublicKey('C5NBj4qaiDXqpwnuonnQTGDA9RfXdJt4yzAp2EwSaLD9'),
       owner: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
       state: 'initialized',
-      address: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
+      address: new PublicKey(1234),
     },
     {
-      ...tokenMapFixture['SOL'],
+      ...tokenMapFixture['DbUxiH9TAeSqSC1vKzwPhu9G6YVo6qjhu2haW2thVA4L'],
       amount: new Numberu64(1234),
-      mint: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
+      mint: new PublicKey('DbUxiH9TAeSqSC1vKzwPhu9G6YVo6qjhu2haW2thVA4L'),
       owner: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
       state: 'initialized',
-      address: new PublicKey('8123NJgPW37mPE8JigXxNBQbx4cUM8akgbydC1S1zWKR'),
+      address: new PublicKey(4321),
     },
   ],
 };

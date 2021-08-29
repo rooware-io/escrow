@@ -1,11 +1,11 @@
 import { TokenInfo } from '@solana/spl-token-registry';
 
 export const tokenMapFixture: { [symbol: string]: TokenInfo } = {
-  EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: {
+  C5NBj4qaiDXqpwnuonnQTGDA9RfXdJt4yzAp2EwSaLD9: {
     chainId: 101,
-    address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-    symbol: 'USDC',
-    name: 'USD Coin',
+    address: 'C5NBj4qaiDXqpwnuonnQTGDA9RfXdJt4yzAp2EwSaLD9',
+    symbol: 'TOX',
+    name: 'Token X',
     decimals: 6,
     logoURI:
       'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png',
@@ -16,25 +16,11 @@ export const tokenMapFixture: { [symbol: string]: TokenInfo } = {
       serumV3Usdt: '77quYg4MGneUdjgXCunt9GgM1usmrxKY31twEy3WHwcS',
     },
   },
-  '9pQKy9V21TzY8xPS7MJB1vLfhvooGe6gmZxeV34qrPwB': {
+  DbUxiH9TAeSqSC1vKzwPhu9G6YVo6qjhu2haW2thVA4L: {
     chainId: 101,
-    address: '9pQKy9V21TzY8xPS7MJB1vLfhvooGe6gmZxeV34qrPwB',
-    symbol: 'TOX',
-    name: 'TOKENX',
-    decimals: 1,
-    logoURI:
-      'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/9nusLQeFKiocswDt6NQsiErm1M43H2b8x6v5onhivqKv/logo.png',
-    tags: [],
-    extensions: {
-      website: 'https://sollama.finance',
-      twitter: 'https://twitter.com/SollamaFinance',
-    },
-  },
-  '9nusLQeFKiocswDt6NQsiErm1M43H2b8x6v5onhivqKv': {
-    chainId: 101,
-    address: '9nusLQeFKiocswDt6NQsiErm1M43H2b8x6v5onhivqKv',
-    symbol: 'LLAMA',
-    name: 'SOLLAMA',
+    address: 'DbUxiH9TAeSqSC1vKzwPhu9G6YVo6qjhu2haW2thVA4L',
+    symbol: 'TOY',
+    name: 'Token Y',
     decimals: 1,
     logoURI:
       'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/9nusLQeFKiocswDt6NQsiErm1M43H2b8x6v5onhivqKv/logo.png',

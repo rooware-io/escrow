@@ -7,6 +7,7 @@ import TradeableAssetCardGrid from '../../components/TradeableAssetCardGrid';
 import { ENDPOINTS } from '../../config/connectionEndpoints';
 import Header from '../../components/Header';
 import { TokenInfoExtended } from '../../components/TradeableAssetCard/TradeableAssetCard';
+import { isKnownToken } from '../../lib/account';
 
 const CreateTradeScreen: FC = () => {
   const { mainAccount, tokenAccounts } = useAccount();
@@ -35,17 +36,21 @@ const CreateTradeScreen: FC = () => {
   if (!mainAccount) return null;
 
   const tokenInfos = Object.values(tokenAccounts)
-    // .filter(
-    //   (account) => isAssociatedTokenAccount(account, mainAccount.owner) && isKnownToken(account.mint, tokenMap)
-    // )
+    .filter((account) =>
+      /*isAssociatedTokenAccount(account, mainAccount.owner) &&*/ isKnownToken(
+        account.mint,
+        tokenMap
+      )
+    )
     .map(
       ({ address, owner, state, amount, mint }): TokenInfoExtended => ({
-        ...(tokenMap.get(address.toString()) || {
-          chainId: 103,
-          decimals: 9,
-          name: 'dummy',
-          symbol: 'DMY',
-        }), // TODO: Remove when able to get some funded accounts on devnet
+        // ...(tokenMap.get(address.toString()), || {
+        // chainId: 103,
+        // decimals: 9,
+        // name: 'dummy',
+        // symbol: 'DMY',
+        // }) // TODO: Remove when able to get some funded accounts on devnet
+        ...tokenMap.get(mint.toString())!,
         owner,
         state,
         amount,
