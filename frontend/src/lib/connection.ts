@@ -19,12 +19,13 @@ export async function sendTransaction(
   if (!wallet?.publicKey) {
     throw new Error('Wallet is not connected');
   }
+  const { blockhash } = await connection.getRecentBlockhash('max');
 
-  let transaction = new Transaction({ feePayer: wallet.publicKey });
-  transaction.add(...instructions);
-  transaction.recentBlockhash = (
-    await connection.getRecentBlockhash('finalized')
-  ).blockhash;
+  let transaction = new Transaction({
+    feePayer: wallet.publicKey,
+    recentBlockhash: blockhash,
+  }).add(...instructions);
+
   if (signers && signers.length > 0) {
     transaction.partialSign(...signers);
   }
